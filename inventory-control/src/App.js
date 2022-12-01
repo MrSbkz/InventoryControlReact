@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { MDBContainer } from 'mdb-react-ui-kit';
+import {BrowserRouter} from 'react-router-dom';
+import {MDBContainer} from 'mdb-react-ui-kit';
 import './App.css';
-import LoginContainer from "./components/Body/Login/LoginContainer";
+import BodyContainer from "./components/Body/BodyContainer";
 
 const App = () => {
-  return (
-      <BrowserRouter>
-        <MDBContainer fluid>
-            <LoginContainer />
-        </MDBContainer>
-      </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <MDBContainer>
+                <BodyContainer/>
+            </MDBContainer>
+        </BrowserRouter>
+    );
 };
 
 export default App;
