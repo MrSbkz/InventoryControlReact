@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { connect } from 'react-redux';
 import Login from './Login'
-import { login, updateUsernameText, updatePassText } from '../../../redux/reducers/auth-reducer';
+import {login, updateUsernameText, updatePassText, resetAuthErrors} from '../../../redux/reducers/auth-reducer';
 
 class LoginContainer extends React.Component {
     render() {
@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
         login: (username, password) => dispatch(login(username, password)),
         updateUsernameText: (username) => dispatch(updateUsernameText(username)),
         updatePassText: (password) => dispatch(updatePassText(password)),
+        resetAuthErrors: () => dispatch(resetAuthErrors()),
     };
 }
 
