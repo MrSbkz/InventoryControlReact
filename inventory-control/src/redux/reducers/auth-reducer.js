@@ -5,6 +5,7 @@ const RESET_AUTH_ERRORS = 'RESET_AUTH_ERRORS';
 const CHECK_AUTHORIZATION = 'CHECK_AUTHORIZATION';
 const LOGOUT = 'LOGOUT';
 const GET_ROLES = 'GET_ROLES';
+const INVENTORY_CONTROL_TOKEN = 'inventory-control-token'
 
 let initialState = {
     emailText: '',
@@ -20,7 +21,7 @@ const authReducer = (state = initialState, action) => {
         case LOGIN: {
             let isAuth = action.username === 'admin' && action.password === '123'
             if (isAuth) {
-                localStorage.setItem('inventory-control', JSON.stringify("sometoken12345"));
+                localStorage.setItem(INVENTORY_CONTROL_TOKEN, JSON.stringify("sometoken12345"));
             }
             return {
                 ...state,
@@ -47,14 +48,14 @@ const authReducer = (state = initialState, action) => {
             }
         }
         case LOGOUT: {
-            localStorage.clear();
+            localStorage.removeItem(INVENTORY_CONTROL_TOKEN);
             return {
                 ...state,
                 isAuthorised: false
             };
         }
         case CHECK_AUTHORIZATION: {
-            if (localStorage.getItem('inventory-control')) {
+            if (localStorage.getItem(INVENTORY_CONTROL_TOKEN)) {
                 return {
                     ...state,
                     isAuthorised: true

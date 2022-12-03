@@ -11,7 +11,7 @@ const SidebarMenuItem = (props) => {
     return (
         <>
             {
-                props.roles.includes(props.role) &&
+                props.roles.some(x => props.accessRoles.includes(x)) &&
                 <MenuItem active={splitLocation[1] === props.location}
                 routerLink={<NavLink to={'/' + props.location}/>}>{props.name}</MenuItem>
             }
@@ -23,7 +23,7 @@ const mapStateToProps = (state, props) => {
     return {
         roles: state.authReducer.roles,
         location: props.location,
-        role: props.role
+        accessRoles: props.accessRoles
     };
 }
 

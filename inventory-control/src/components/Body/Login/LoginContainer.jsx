@@ -5,7 +5,9 @@ import {login, updateUsernameText, updatePassText, resetAuthErrors} from '../../
 
 class LoginContainer extends React.Component {
     render() {
-        return <Login {...this.props} />
+        {
+            if(this.props.localization) return <Login {...this.props} />
+        }
     }
 }
 
@@ -13,7 +15,8 @@ const mapStateToProps = (state) => {
     return {
         errors: state.authReducer.authErrors,
         usernameText: state.authReducer.usernameText,
-        passText: state.authReducer.passText
+        passText: state.authReducer.passText,
+        localization: state.localizationReducer.localization,
     };
 }
 

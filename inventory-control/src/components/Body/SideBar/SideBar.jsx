@@ -2,27 +2,45 @@
 import {Menu, ProSidebarProvider, Sidebar} from "react-pro-sidebar";
 import {Button} from "@mui/material";
 import SidebarMenuItem from "../../Common/SidebarMenuItem";
+import Switcher from "../../Common/Switcher";
 
 const SideBar = (props) => {
     return (
         <ProSidebarProvider>
-            <Sidebar>
-                <div className="d-flex justify-content-center">
-                    <Button size="small" className="mt-3 mb-3" variant="outlined" color="error"
-                    onClick={() => props.logout()}>Logout</Button>
-                </div>
+            <Sidebar
+                rootStyles={{
+                    color: "black",
+                    fontWeight: "bold"
+                }}
+            >
+                <Switcher
+                    setItem={props.changeLanguage}
+                    items={props.languages}
+                    currentItem={props.currentLanguage}
+                />
+                <hr/>
                 <Menu>
-                    <SidebarMenuItem 
-                        name='Users Control'
-                        location='users'
-                        role='admin'
+                    <SidebarMenuItem
+                        name={props.localization.employeeControl}
+                        location='employees'
+                        accessRoles={['admin']}
                     />
                     <SidebarMenuItem
-                        name='Requests'
+                        name={props.localization.requests}
                         location='requests'
-                        role='admin'
+                        accessRoles={['admin']}
                     />
                 </Menu>
+                <hr/>
+                <div
+                    className="d-flex justify-content-center">
+                    <Button
+                        size="small"
+                        className="mb-3"
+                        variant="outlined"
+                        color="error"
+                        onClick={() => props.logout()}>{props.localization.logout}</Button>
+                </div>
             </Sidebar>
         </ProSidebarProvider>
     )

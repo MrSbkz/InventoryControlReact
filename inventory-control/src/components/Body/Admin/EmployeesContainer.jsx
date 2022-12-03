@@ -1,16 +1,16 @@
 ﻿import React from 'react';
 import {connect} from 'react-redux';
-import Users from "./Users";
+import Employees from "./Employees";
 import AccessError from "../../Common/AccessError";
 
 
-class UsersContainer extends React.Component {
+class EmployeesContainer extends React.Component {
     render() {
         return (
             <>
                 {
                     this.props.roles.includes("admin")
-                        ? <Users {...this.props} />
+                        ? <Employees {...this.props} />
                         : <AccessError/>
                 }
             </>
@@ -28,5 +28,5 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeesContainer);
 

@@ -1,8 +1,8 @@
 ﻿import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import SideBarContainer from "./SideBar/SideBarContainer";
-import UsersContainer from "./Admin/UsersContainer";
 import NotFound from "../Common/NotFound";
+import EmployeesContainer from "./Admin/EmployeesContainer";
 
 const Body = (props) => {
     return (
@@ -15,7 +15,7 @@ const Body = (props) => {
             }
             <div className="col-lg-auto col-md-auto col-sm-auto col-xl-auto">
                 <Routes>
-                    <Route path='/users' element={<UsersContainer/>}/>
+                    <Route path='/employees' element={<EmployeesContainer/>}/>
                     <Route path='/*' element={<NotFound/>}/>
                 </Routes>
             </div>

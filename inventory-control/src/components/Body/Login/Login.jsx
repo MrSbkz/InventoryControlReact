@@ -24,19 +24,21 @@ const Login = (props) => {
                 <div className='flex-column'>
                     <MDBInput className='mb-4 mt-5'
                               type='username'
-                              id='username' label='Username'
+                              id='username'
+                              label={props.localization?props.localization.username:''}
                               onChange={onUsernameChange}
                               value={props.usernameText}
                               autoFocus
                     />
                     <MDBInput className='mb-4 d-flex justify-content-center'
                               type='password'
-                              id='password' label='Password'
+                              id='password'
+                              label={props.localization?props.localization.password:''}
                               onChange={onPasswordChange}
                               value={props.passText}
                     />
                     <MDBBtn type='submit' block className='mt-2' onClick={submitForm}>
-                        Sign in
+                        {props.localization.signIn}
                     </MDBBtn>
                 </div>
             </div>
