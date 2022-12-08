@@ -21,8 +21,8 @@ const SideBar = (props) => {
                 <hr/>
                 <Menu>
                     <SidebarMenuItem
-                        name={props.localization.employeeControl}
-                        location='employees'
+                        name={props.localization.usersControl}
+                        location='users'
                         accessRoles={['admin']}
                     />
                     <SidebarMenuItem

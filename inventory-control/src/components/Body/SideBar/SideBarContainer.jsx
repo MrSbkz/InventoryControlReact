@@ -6,9 +6,7 @@ import {changeLanguage} from "../../../redux/reducers/localization-reducer";
 
 class SideBarContainer extends React.Component {
     render() {
-        {
             if(this.props.localization) return <SideBar {...this.props} />
-        }
     }
 }
 
@@ -28,4 +26,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarContainer);
-

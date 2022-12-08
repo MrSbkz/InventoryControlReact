@@ -5,9 +5,7 @@ import {login, updateUsernameText, updatePassText, resetAuthErrors} from '../../
 
 class LoginContainer extends React.Component {
     render() {
-        {
             if(this.props.localization) return <Login {...this.props} />
-        }
     }
 }
 
