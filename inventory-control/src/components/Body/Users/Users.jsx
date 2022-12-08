@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import {AddEditButton} from "./AddEditButton";
+import {MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
 
 const Users = (props) => {
 
@@ -8,7 +9,7 @@ const Users = (props) => {
             <td>
                 <div className="d-flex align-items-center">
                     <div>
-                        <p className="fw-bold mb-1">{u.firstName} {u.lastName}</p>
+                        <p className="fw-bold mb-0">{u.firstName} {u.lastName}</p>
                         <p className="text-muted mb-0">{u.username}</p>
                     </div>
                 </div>
@@ -16,27 +17,30 @@ const Users = (props) => {
             <td>
                 {
                     u.roles.map((r, indexRole) => (
-                        <p key={indexRole} className="fw-normal mb-1">{r}</p>
+                        <p key={indexRole} className="fw-normal mb-0">{r}</p>
                     ))
                 }
             </td>
             <td>
-                <p className="fw-normal mb-1">
+                <div className="fw-normal mb-1">
                     <AddEditButton
                         className="btn-sm"
                         btnName={props.localization.edit}
                         title={props.localization.editUser}
                         localization={props.localization}
+                        resetUserData={props.resetUserData}
+                        setUserData={props.setUserData}
+                        user={u}
                         isAdding={false}
                         rounded={true}
                         outline={false}
                     />
-                </p>
-                <p className="fw-normal mb-1">
+                </div>
+                <div className="fw-normal mb-1">
                     <button type="button" className="btn btn-danger btn-sm btn-rounded">
                         {props.localization.resetPassword}
                     </button>
-                </p>
+                </div>
             </td>
         </tr>
     ));
@@ -50,6 +54,8 @@ const Users = (props) => {
                         btnName=''
                         title={props.localization.addUser}
                         localization={props.localization}
+                        resetUserData={props.resetUserData}
+                        setUserData={() => true}
                         isAdding={true}
                         rounded={true}
                         outline={true}
@@ -68,18 +74,18 @@ const Users = (props) => {
                     </div>
                 </div>
             </div>
-            <table className="table align-middle mb-0 bg-white">
-                <thead className="bg-light">
-                <tr>
-                    <th>{props.localization.nameTable}</th>
-                    <th>{props.localization.roles}</th>
-                    <th>{props.localization.actions}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {users}
-                </tbody>
-            </table>
+            <MDBTable align='middle'>
+                <MDBTableHead className='bg-light'>
+                    <tr>
+                        <th>{props.localization.nameTable}</th>
+                        <th>{props.localization.roles}</th>
+                        <th>{props.localization.actions}</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody>
+                    {users}
+                </MDBTableBody>
+            </MDBTable>
         </>
     );
 };

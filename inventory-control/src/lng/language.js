@@ -19,6 +19,7 @@
         editUser: "Edit user",
         firstName: "First name",
         lastName: "Last name",
+        confirmPassword: "Confirm password",
     },
     Ru: {
         username: "Имя пользователя",
@@ -40,5 +41,6 @@
         editUser: "Изменить пользователя",
         firstName: "Имя",
         lastName: "Фамилия",
+        confirmPassword: "Подтвердите пароль",
     }
 }

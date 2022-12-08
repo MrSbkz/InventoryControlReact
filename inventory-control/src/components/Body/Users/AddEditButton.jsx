@@ -15,7 +15,13 @@ import UserFormContainer from "./UserForm/UserFormContainer";
 
 export const AddEditButton = (props) => {
     const [basicModal, setBasicModal] = useState(false);
-    const toggleShow = () => setBasicModal(!basicModal);
+    const toggleShow = () => {
+        if(!basicModal){
+            props.resetUserData();
+        }
+        props.setUserData(props.user);
+        setBasicModal(!basicModal);
+    }
 
     return (
         <>
@@ -40,7 +46,7 @@ export const AddEditButton = (props) => {
                             />
                         </MDBModalHeader>
                         <MDBModalBody>
-                            <UserFormContainer/>
+                            <UserFormContainer isAdding={props.isAdding}/>
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn

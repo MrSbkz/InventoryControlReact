@@ -2,7 +2,7 @@
 import {connect} from 'react-redux';
 import AccessError from "../../Common/AccessError";
 import Users from "./Users";
-import {getUsers} from "../../../redux/reducers/user-reducer";
+import {getUsers, resetUserData, setUserData} from "../../../redux/reducers/user-reducer";
 
 
 class UsersContainer extends React.Component {
@@ -33,7 +33,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUsers: () => dispatch(getUsers())
+        getUsers: () => dispatch(getUsers()),
+        resetUserData: () => dispatch(resetUserData()),
+        setUserData: (user) => dispatch(setUserData(user)),
     };
 }
 
