@@ -3,7 +3,6 @@ import {AddEditButton} from "./AddEditButton";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
 
 const Users = (props) => {
-
     const users = props.users.map((u, indexUser) => (
         <tr key={indexUser}>
             <td>

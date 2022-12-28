@@ -14,7 +14,7 @@ class UsersContainer extends React.Component {
         return (
             <>
                 {
-                    this.props.roles.includes("admin")
+                     this.props.roles.includes("admin")
                         ? <Users {...this.props} />
                         : <AccessError/>
                 }
@@ -25,7 +25,7 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        roles: state.authReducer.roles,
+        roles: state.userReducer.allRoles,
         localization: state.localizationReducer.localization,
         users: state.userReducer.users,
     };

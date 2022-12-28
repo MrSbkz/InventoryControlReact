@@ -20,7 +20,7 @@ class UserFormContainer extends React.Component {
 const mapStateToProps = (state, props) => {
     return {
         localization: state.localizationReducer.localization,
-        roles: state.authReducer.roles,
+        roles: state.userReducer.allRoles,
         firstNameText: state.userReducer.firstNameText,
         lastNameText: state.userReducer.lastNameText,
         usernameText: state.userReducer.usernameText,

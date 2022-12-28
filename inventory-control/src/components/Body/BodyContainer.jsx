@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Body from "./Body";
 import {checkAuthorization, getRoles} from "../../redux/reducers/auth-reducer";
 import LoginContainer from "./Login/LoginContainer";
@@ -9,20 +9,20 @@ class BodyContainer extends React.Component {
     componentDidMount() {
         this.props.setLanguage();
         this.props.checkAuthorization();
-        if(this.props.roles.length === 0){
-            this.props.getRoles();
-        }
     }
 
     render() {
-        if(!this.props.isAuthorised) return <LoginContainer />
-        else if(this.props.localization) return <Body {...this.props} />
+        if (this.props.roles.length === 0) {
+            this.props.getRoles();
+        }
+        if (!this.props.isAuthorized) return <LoginContainer/>
+        else if (this.props.localization) return <Body {...this.props} />
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        isAuthorised: state.authReducer.isAuthorised,
+        isAuthorized: state.authReducer.isAuthorized,
         roles: state.authReducer.roles,
         localization: state.localizationReducer.localization,
     };
