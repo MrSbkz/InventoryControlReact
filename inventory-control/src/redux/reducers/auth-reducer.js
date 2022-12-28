@@ -1,4 +1,6 @@
-﻿const SET_TOKEN = 'SET_TOKEN';
+﻿import {authAPI} from "../../api/api";
+
+const SET_TOKEN = 'SET_TOKEN';
 const SET_AUTH_ERRORS = 'SET_AUTH_ERRORS';
 const UPDATE_USERNAME = 'UPDATE_USERNAME';
 const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
@@ -14,7 +16,7 @@ let initialState = {
     usernameText: '',
     passText: '',
     roles: [],
-    isAuthorised: false,
+    isAuthorized: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,7 +25,7 @@ const authReducer = (state = initialState, action) => {
             localStorage.setItem(INVENTORY_CONTROL_TOKEN, JSON.stringify(action.token));
             return {
                 ...state,
-                isAuthorised: true,
+                isAuthorized: true,
             }
         }
         case SET_AUTH_ERRORS: {
@@ -54,25 +56,26 @@ const authReducer = (state = initialState, action) => {
             localStorage.removeItem(INVENTORY_CONTROL_TOKEN);
             return {
                 ...state,
-                isAuthorised: false,
+                isAuthorized: false,
+                roles: [],
             };
         }
         case CHECK_AUTHORIZATION: {
             if (localStorage.getItem(INVENTORY_CONTROL_TOKEN)) {
                 return {
                     ...state,
-                    isAuthorised: true,
+                    isAuthorized: true,
                 }
             }
             return state;
         }
         case SET_ROLES: {
-            if(state.roles.length > 0){
-                return state
+            if (state.roles.length > 0) {
+                return state;
             }
             return {
                 ...state,
-                roles: ['admin', 'employee', 'accountant'],
+                roles: action.roles,
             }
         }
         default:
@@ -90,39 +93,38 @@ export const logout = () => ({type: LOGOUT});
 export const setRoles = (roles) => ({type: SET_ROLES, roles});
 
 export const getRoles = () => (dispatch) => {
-    let roles = ['admin', 'employee', 'accountant']
-    dispatch(setRoles(roles));
+    authAPI.getRoles().then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setRoles(response.data.data));
+        } else {
+            switch (response.status) {
+                case 500:
+                    dispatch(setAuthErrors(response.data.errors));
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
 }
 
 export const login = (username, password) => (dispatch) => {
-    let isAuth = username === 'admin' && password === '123'
-    let response;
-    if (isAuth) {
-        response = {
-            status: 200,
-            token: "sometoken12345",
+    authAPI.login(username, password).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setToken(response.data.data.token));
+        } else {
+            switch (response.status) {
+                case 400:
+                    dispatch(setAuthErrors(response.data.errors));
+                    break;
+                case 500:
+                    dispatch(setAuthErrors(['Server error']));
+                    break;
+                default:
+                    break;
+            }
         }
-    }
-    else {
-        response = {
-            status: 400,
-            errors: ["Incorrect username or password", "Another error", "Errrrrrrror!", "Ooooops"],
-        }
-    }
-    
-    switch (response.status){
-        case 200:{
-            dispatch(setToken(response.token));
-            break;
-        }
-        case 400:{
-            dispatch(setAuthErrors(response.errors));
-            break;
-        }
-        default:
-            break;
-    }
-
+    });
 }
 
 export default authReducer;

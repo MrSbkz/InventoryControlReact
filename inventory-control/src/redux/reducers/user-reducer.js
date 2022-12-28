@@ -26,6 +26,7 @@ let initialState = {
     passwordText: '',
     passwordConfirmText: '',
     userRoles: [],
+    allRoles: ['admin', 'accountant', 'employee'],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -75,8 +76,8 @@ const userReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
-                userRoles: [...state.userRoles.map(x =>{
-                    if(x !== action.role){
+                userRoles: [...state.userRoles.map(x => {
+                    if (x !== action.role) {
                         return x;
                     }
                     return null;
@@ -140,9 +141,7 @@ export const getUsers = () => (dispatch) => {
             firstName: "Ramsay",
             lastName: "Bolton",
             username: "ramsay.bolton",
-            roles: [
-                
-            ],
+            roles: [],
         },
         {
             firstName: "Ned",

@@ -8,7 +8,7 @@ const Body = (props) => {
     return (
         <div className="row mt-5">
             {
-                props.isAuthorised &&
+                props.isAuthorized &&
                 <div className="col-lg-3 col-md-4 col-sm-auto col-xl-3">
                     <SideBarContainer/>
                 </div>
