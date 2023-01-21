@@ -20,6 +20,14 @@
         firstName: "First name",
         lastName: "Last name",
         confirmPassword: "Confirm password",
+        devices: "Devices",
+        deviceName: "Device Name",
+        registrationDate: "Registration date",
+        decommissionDate: "Decommission date",
+        assignedTo: "Assigned to",
+        selectUser: "Select user",
+        downloadQR: "Download QR code",
+        changeDeviceName: "Change Device Name",
     },
     Ru: {
         username: "Имя пользователя",
@@ -42,5 +50,13 @@
         firstName: "Имя",
         lastName: "Фамилия",
         confirmPassword: "Подтвердите пароль",
+        devices: "Устройства",
+        deviceName: "Имя устройства",
+        registrationDate: "Дата регистрации",
+        decommissionDate: "Дата списания",
+        assignedTo: "Пользователь",
+        selectUser: "Выбрать пользователя",
+        downloadQR: "Скачать QR код",
+        changeDeviceName: "Изменить имя устройства",
     }
 }

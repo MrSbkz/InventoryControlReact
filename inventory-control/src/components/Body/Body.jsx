@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router-dom';
 import SideBarContainer from "./SideBar/SideBarContainer";
 import NotFound from "../Common/NotFound";
 import UsersContainer from "./Users/UsersContainer";
+import DevicesContainer from "./Devices/DevicesContainer";
 
 const Body = (props) => {
     return (
@@ -17,6 +18,7 @@ const Body = (props) => {
                 <div className="justify-content-center">
                     <Routes>
                         <Route path='/users' element={<UsersContainer/>}/>
+                        <Route path='/devices' element={<DevicesContainer/>}/>
                         <Route path='/*' element={<NotFound/>}/>
                     </Routes>
                 </div>
