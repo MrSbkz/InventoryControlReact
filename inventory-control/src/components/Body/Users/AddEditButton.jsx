@@ -16,11 +16,15 @@ import UserFormContainer from "./UserForm/UserFormContainer";
 export const AddEditButton = (props) => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => {
-        if(!basicModal){
+        if (!basicModal) {
             props.resetUserData();
         }
         props.setUserData(props.user);
         setBasicModal(!basicModal);
+    }
+
+    const onSaveChanges = () => {
+        
     }
 
     return (

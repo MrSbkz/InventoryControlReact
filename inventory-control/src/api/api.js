@@ -17,7 +17,7 @@ instance.interceptors.request.use(function (config) {
 
 export const authAPI = {
     login(username, password) {
-        return instance.post(`auth/login`, { username, password })
+        return instance.post(`auth/login`, {username, password})
             .then(response => {
                 return response
             })
@@ -26,7 +26,7 @@ export const authAPI = {
             })
     },
     register(username, password) {
-        return instance.post(`auth/register`, { username, password })
+        return instance.post(`auth/register`, {username, password})
             .then(response => {
                 return response
             })
@@ -38,6 +38,18 @@ export const authAPI = {
         return instance.get(`role/list`)
             .then(response => {
                 return response
+            })
+            .catch(error => {
+                return error.response
+            })
+    }
+}
+
+export const userAPI = {
+    getUsers(currentPage) {
+        return instance.get(`user/list?pageSize=${1}&currentPage=${currentPage}`)
+            .then(response => {
+                return response;
             })
             .catch(error => {
                 return error.response

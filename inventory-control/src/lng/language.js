@@ -1,6 +1,6 @@
 ﻿export const language = {
     En: {
-        username: "Username",
+        userName: "Username",
         password: "Password",
         signIn: "Sign In",
         usersControl: "Users control",
@@ -30,7 +30,7 @@
         changeDeviceName: "Change Device Name",
     },
     Ru: {
-        username: "Имя пользователя",
+        userName: "Имя пользователя",
         password: "Пароль",
         signIn: "Войти",
         usersControl: "Пользователи",

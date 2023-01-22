@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import {AddEditButton} from "./AddEditButton";
-import {MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
+import {MDBCol, MDBRow, MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
+import {Pagination} from "@mui/material";
 
 const Users = (props) => {
     const users = props.users.map((u, indexUser) => (
@@ -9,7 +10,7 @@ const Users = (props) => {
                 <div className="d-flex align-items-center">
                     <div>
                         <p className="fw-bold mb-0">{u.firstName} {u.lastName}</p>
-                        <p className="text-muted mb-0">{u.username}</p>
+                        <p className="text-muted mb-0">{u.userName}</p>
                     </div>
                 </div>
             </td>
@@ -85,6 +86,15 @@ const Users = (props) => {
                     {users}
                 </MDBTableBody>
             </MDBTable>
+            <MDBRow className='d-flex justify-content-center'>
+                <MDBCol md='6' className='mt-5'>
+                    <Pagination
+                        page={props.currentPage}
+                        count={props.totalPages}
+                        onChange={(e, page)=>props.getUsers(page)}
+                    />
+                </MDBCol>
+            </MDBRow>
         </>
     );
 };

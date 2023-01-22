@@ -7,7 +7,7 @@ import {getUsers, resetUserData, setUserData} from "../../../redux/reducers/user
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.getUsers();
+        this.props.getUsers(1);
     }
 
     render() {
@@ -28,12 +28,15 @@ const mapStateToProps = (state) => {
         roles: state.userReducer.allRoles,
         localization: state.localizationReducer.localization,
         users: state.userReducer.users,
+        currentPage: state.userReducer.currentPage,
+        totalPages: state.userReducer.totalPages,
+        
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUsers: () => dispatch(getUsers()),
+        getUsers: (currentPage) => dispatch(getUsers(currentPage)),
         resetUserData: () => dispatch(resetUserData()),
         setUserData: (user) => dispatch(setUserData(user)),
     };
