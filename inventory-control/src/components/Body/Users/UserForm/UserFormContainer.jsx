@@ -23,7 +23,7 @@ const mapStateToProps = (state, props) => {
         roles: state.userReducer.allRoles,
         firstNameText: state.userReducer.firstNameText,
         lastNameText: state.userReducer.lastNameText,
-        usernameText: state.userReducer.usernameText,
+        userNameText: state.userReducer.userNameText,
         passwordText: state.userReducer.passwordText,
         passwordConfirmText: state.userReducer.passwordConfirmText,
         userRoles: state.userReducer.userRoles,
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateFirstName: (firstName) => dispatch(updateFirstName(firstName)),
         updateLastName: (lastName) => dispatch(updateLastName(lastName)),
-        updateUsername: (username) => dispatch(updateUsername(username)),
+        updateUsername: (userName) => dispatch(updateUsername(userName)),
         updatePassword: (password) => dispatch(updatePassword(password)),
         updatePasswordConfirm: (passwordConfirm) => dispatch(updatePasswordConfirm(passwordConfirm)),
         updateRoles: (role) => dispatch(updateRoles(role)),

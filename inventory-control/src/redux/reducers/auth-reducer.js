@@ -13,7 +13,7 @@ const INVENTORY_CONTROL_TOKEN = 'inventory-control-token'
 let initialState = {
     emailText: '',
     authErrors: [],
-    usernameText: '',
+    userNameText: '',
     passText: '',
     roles: [],
     isAuthorized: false,
@@ -37,7 +37,7 @@ const authReducer = (state = initialState, action) => {
         case UPDATE_USERNAME: {
             return {
                 ...state,
-                usernameText: action.username,
+                userNameText: action.userName,
             }
         }
         case UPDATE_PASSWORD: {
@@ -85,7 +85,7 @@ const authReducer = (state = initialState, action) => {
 
 export const setToken = (token) => ({type: SET_TOKEN, token});
 export const setAuthErrors = (errors) => ({type: SET_AUTH_ERRORS, errors});
-export const updateUsernameText = (username) => ({type: UPDATE_USERNAME, username});
+export const updateUserNameText = (userName) => ({type: UPDATE_USERNAME, userName});
 export const updatePassText = (password) => ({type: UPDATE_PASSWORD, password});
 export const resetAuthErrors = () => ({type: RESET_AUTH_ERRORS});
 export const checkAuthorization = () => ({type: CHECK_AUTHORIZATION});
@@ -108,8 +108,8 @@ export const getRoles = () => (dispatch) => {
     })
 }
 
-export const login = (username, password) => (dispatch) => {
-    authAPI.login(username, password).then(response => {
+export const login = (userName, password) => (dispatch) => {
+    authAPI.login(userName, password).then(response => {
         if (response.data.isSuccess) {
             dispatch(setToken(response.data.data.token));
         } else {

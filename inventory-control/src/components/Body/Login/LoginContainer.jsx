@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { connect } from 'react-redux';
 import Login from './Login'
-import {login, updateUsernameText, updatePassText, resetAuthErrors} from '../../../redux/reducers/auth-reducer';
+import {login, updateUserNameText, updatePassText, resetAuthErrors} from '../../../redux/reducers/auth-reducer';
 
 class LoginContainer extends React.Component {
     render() {
@@ -12,7 +12,7 @@ class LoginContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         errors: state.authReducer.authErrors,
-        usernameText: state.authReducer.usernameText,
+        userNameText: state.authReducer.userNameText,
         passText: state.authReducer.passText,
         localization: state.localizationReducer.localization,
     };
@@ -20,8 +20,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: (username, password) => dispatch(login(username, password)),
-        updateUsernameText: (username) => dispatch(updateUsernameText(username)),
+        login: (userName, password) => dispatch(login(userName, password)),
+        updateUserNameText: (userName) => dispatch(updateUserNameText(userName)),
         updatePassText: (password) => dispatch(updatePassText(password)),
         resetAuthErrors: () => dispatch(resetAuthErrors()),
     };

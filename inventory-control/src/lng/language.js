@@ -1,6 +1,6 @@
 ﻿export const language = {
     En: {
-        username: "Username",
+        userName: "Username",
         password: "Password",
         signIn: "Sign In",
         usersControl: "Users control",
@@ -28,9 +28,12 @@
         selectUser: "Select user",
         downloadQR: "Download QR code",
         changeDeviceName: "Change Device Name",
+        makeInactive: "Make inactive",
+        restore: "Restore",
+        showInactiveUsers: "Show inactive users",
     },
     Ru: {
-        username: "Имя пользователя",
+        userName: "Имя пользователя",
         password: "Пароль",
         signIn: "Войти",
         usersControl: "Пользователи",
@@ -58,5 +61,8 @@
         selectUser: "Выбрать пользователя",
         downloadQR: "Скачать QR код",
         changeDeviceName: "Изменить имя устройства",
+        makeInactive: "Сделать неактивным",
+        restore: "Восстановить",
+        showInactiveUsers: "Показать неактивных пользователей",
     }
 }

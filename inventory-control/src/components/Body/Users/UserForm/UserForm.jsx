@@ -38,8 +38,8 @@ const UserForm = (props) => {
             <MDBInput
                 disabled={!props.isAdding}
                 wrapperClass='mb-4'
-                label={props.localization.username}
-                value={props.usernameText}
+                label={props.localization.userName}
+                value={props.userNameText}
                 onChange={(e) => props.updateUsername(e.target.value)}
             />
             <div className='ml-5'>

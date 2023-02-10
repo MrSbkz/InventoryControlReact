@@ -55,7 +55,7 @@ export const getDevices = () => (dispatch) => {
             registerDate: '2011-11-11 15:00:00',
             assignedTo: {
                 fullName: 'Jaime Lannister',
-                username: 'jaime.lannister'
+                userName: 'jaime.lannister'
             },
             decommissionDate: null
         },
@@ -65,7 +65,7 @@ export const getDevices = () => (dispatch) => {
             registerDate: '2011-11-11 15:00:00',
             assignedTo: {
                 fullName: 'Petyr Baelish',
-                username: 'petyr.baelish'
+                userName: 'petyr.baelish'
             },
             decommissionDate: null
         },
@@ -77,19 +77,19 @@ export const getUserNames = () => (dispatch) => {
     let users = [
         {
             fullName: 'Jaime Lannister',
-            username: 'jaime.lannister'
+            userName: 'jaime.lannister'
         },
         {
             fullName: 'Petyr Baelish',
-            username: 'petyr.baelish'
+            userName: 'petyr.baelish'
         },
         {
             fullName: 'Jorah Mormont',
-            username: 'jorah.mormont'
+            userName: 'jorah.mormont'
         },
         {
             fullName: 'Theon Greyjoy',
-            username: 'theon.greyjoy'
+            userName: 'theon.greyjoy'
         },
     ]
     dispatch(setUserNames(users));

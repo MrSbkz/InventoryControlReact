@@ -7,19 +7,19 @@ import PositionedSnackbar from "../../Common/PositionedSnackbar";
 
 const Login = (props) => {
     const onUsernameChange = (e) => {
-        props.updateUsernameText(e.target.value)
+        props.updateUserNameText(e.target.value)
     }
     const onPasswordChange = (e) => {
         props.updatePassText(e.target.value)
     }
     const submitForm = () => {
         props.resetAuthErrors();
-        props.login(props.usernameText, props.passText);
+        props.login(props.userNameText, props.passText);
     }
     
     return (
         <>
-            {props.errors.map((e, index) => (<PositionedSnackbar resetAuthErrors={props.resetAuthErrors} key={index} index={index} message={e}/>))}
+            {props.errors.map((e, index) => (<PositionedSnackbar resetErrors={props.resetAuthErrors} key={index} index={index} message={e}/>))}
             <div className='d-flex justify-content-center mt-5'>
                 <div className='flex-column'>
                     <MDBInput className='mb-4 mt-5'
@@ -27,7 +27,7 @@ const Login = (props) => {
                               id='username'
                               label={props.localization?props.localization.username:''}
                               onChange={onUsernameChange}
-                              value={props.usernameText}
+                              value={props.userNameText}
                               autoFocus
                     />
                     <MDBInput className='mb-4 d-flex justify-content-center'
