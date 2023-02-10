@@ -28,6 +28,9 @@
         selectUser: "Select user",
         downloadQR: "Download QR code",
         changeDeviceName: "Change Device Name",
+        makeInactive: "Make inactive",
+        restore: "Restore",
+        showInactiveUsers: "Show inactive users",
     },
     Ru: {
         userName: "Имя пользователя",
@@ -58,5 +61,8 @@
         selectUser: "Выбрать пользователя",
         downloadQR: "Скачать QR код",
         changeDeviceName: "Изменить имя устройства",
+        makeInactive: "Сделать неактивным",
+        restore: "Восстановить",
+        showInactiveUsers: "Показать неактивных пользователей",
     }
 }

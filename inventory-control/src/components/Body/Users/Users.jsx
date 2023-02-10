@@ -1,11 +1,12 @@
 ﻿import React from 'react';
 import {AddEditButton} from "./AddEditButton";
-import {MDBCol, MDBRow, MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
+import {MDBBtn, MDBCheckbox, MDBCol, MDBRow, MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
 import {Pagination} from "@mui/material";
+import PositionedSnackbar from "../../Common/PositionedSnackbar";
 
 const Users = (props) => {
     const users = props.users.map((u, indexUser) => (
-        <tr key={indexUser}>
+        <tr key={indexUser} className={!u.isActive ? 'table-secondary' : ''}>
             <td>
                 <div className="d-flex align-items-center">
                     <div>
@@ -34,12 +35,30 @@ const Users = (props) => {
                         isAdding={false}
                         rounded={true}
                         outline={false}
+                        saveChanges={props.saveChanges}
                     />
                 </div>
                 <div className="fw-normal mb-1">
-                    <button type="button" className="btn btn-danger btn-sm btn-rounded">
-                        {props.localization.resetPassword}
-                    </button>
+                    {
+                        u.isActive
+                            ? <MDBBtn
+                                color='danger'
+                                rounded
+                                size='sm'
+                                onClick={() => props.makeUserInactive(u.userName, props.currentPage, props.searchString, props.showInactiveUsers)}
+                            >
+                                {props.localization.makeInactive}
+                            </MDBBtn>
+                            : <MDBBtn
+                                color='success'
+                                rounded
+                                size='sm'
+                                onClick={() => props.restoreUser(u.userName, props.currentPage, props.searchString, props.showInactiveUsers)}
+                            >
+                                {props.localization.restore}
+                            </MDBBtn>
+                    }
+
                 </div>
             </td>
         </tr>
@@ -47,8 +66,10 @@ const Users = (props) => {
 
     return (
         <>
-            <div className="row mt-2 mb-2">
-                <div className="col-md-4">
+            {props.errors.map((e, index) => (
+                <PositionedSnackbar resetErrors={props.resetUserErrors} key={index} index={index} message={e}/>))}
+            <MDBRow className="mt-2 mb-2">
+                <MDBCol size='md'>
                     <AddEditButton
                         className="btn-outline-success"
                         btnName=''
@@ -59,21 +80,36 @@ const Users = (props) => {
                         isAdding={true}
                         rounded={true}
                         outline={true}
+                        saveChanges={props.saveChanges}
                     />
-                </div>
-                <div className="col-md-3 offset-md-4">
+                </MDBCol>
+                <MDBCol size='md'>
+                    <MDBCheckbox
+                        name='flexCheck'
+                        value={props.showInactiveUsers}
+                        onChange={() => props.onShowInactiveUsers()}
+                        id='flexCheckDefault'
+                        label={props.localization.showInactiveUsers}
+                    />
+                </MDBCol>
+                <MDBCol size='md'>
                     <div className="input-group rounded">
                         <input type="search"
                                className="form-control rounded"
                                placeholder={props.localization.search}
                                aria-label={props.localization.search}
-                               aria-describedby="search-addon"/>
+                               aria-describedby="search-addon"
+                               value={props.searchString}
+                               onChange={(e) => props.updateSearchString(e.target.value)}
+                        />
                         <span className="input-group-text border-0" id="search-addon">
-                        <i className="fas fa-search"></i>
+                        <i className="fas fa-search" 
+                           onClick={() => props.getUsers(props.currentPage, props.searchString, props.showInactiveUsers)}
+                           style={{cursor: "pointer"}}></i>
                     </span>
                     </div>
-                </div>
-            </div>
+                </MDBCol>
+            </MDBRow>
             <MDBTable align='middle'>
                 <MDBTableHead className='bg-light'>
                     <tr>
@@ -91,7 +127,7 @@ const Users = (props) => {
                     <Pagination
                         page={props.currentPage}
                         count={props.totalPages}
-                        onChange={(e, page)=>props.getUsers(page)}
+                        onChange={(e, page) => props.getUsers(page, props.searchString, props.showInactiveUsers)}
                     />
                 </MDBCol>
             </MDBRow>

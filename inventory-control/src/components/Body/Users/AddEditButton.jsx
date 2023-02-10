@@ -24,7 +24,8 @@ export const AddEditButton = (props) => {
     }
 
     const onSaveChanges = () => {
-        
+        props.saveChanges(props.isAdding)
+        toggleShow();
     }
 
     return (
@@ -64,6 +65,7 @@ export const AddEditButton = (props) => {
                             <MDBBtn
                                 className='btn-sm'
                                 color='info'
+                                onClick={onSaveChanges}
                             >
                                 {props.localization.saveChanges}
                             </MDBBtn>

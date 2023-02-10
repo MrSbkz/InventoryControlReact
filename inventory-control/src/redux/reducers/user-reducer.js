@@ -10,6 +10,12 @@ const UPDATE_ROLES = 'UPDATE_ROLES';
 const RESET_USER_DATA = 'RESET_USER_DATA';
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_PAGES = 'SET_PAGES';
+const SET_NEW_USER = 'SET_NEW_USER';
+const SET_UPDATED_USER = 'SET_UPDATED_USER';
+const SET_USER_ERRORS = 'SET_USER_ERRORS';
+const RESET_USER_ERRORS = 'RESET_USER_ERRORS';
+const CHANGE_SHOW_INACTIVE_USERS = 'CHANGE_SHOW_INACTIVE_USERS';
+const UPDATE_SEARCH_STRING = 'UPDATE_SEARCH_STRING';
 
 export const setUsers = (users) => ({type: SET_USERS, users});
 export const updateFirstName = (firstName) => ({type: UPDATE_FIRST_NAME, firstName});
@@ -21,6 +27,12 @@ export const updateRoles = (role) => ({type: UPDATE_ROLES, role});
 export const resetUserData = () => ({type: RESET_USER_DATA});
 export const setUserData = (user) => ({type: SET_USER_DATA, user});
 export const setPages = (currentPage, totalPages) => ({type: SET_PAGES, currentPage, totalPages});
+export const setNewUser = (user) => ({type: SET_NEW_USER, user});
+export const setUpdatedUser = (user) => ({type: SET_UPDATED_USER, user});
+export const setUserErrors = (errors) => ({type: SET_USER_ERRORS, errors});
+export const resetUserErrors = (errors) => ({type: RESET_USER_ERRORS, errors});
+export const changeShowInactiveUsers = () => ({type: CHANGE_SHOW_INACTIVE_USERS});
+export const updateSearchString = (searchString) => ({type: UPDATE_SEARCH_STRING, searchString});
 
 let initialState = {
     users: [],
@@ -33,6 +45,10 @@ let initialState = {
     allRoles: ['admin', 'accountant', 'employee'],
     currentPage: 0,
     totalPages: 0,
+    isLastPage: false,
+    userErrors: [],
+    showInactiveUsers: false,
+    searchString: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -58,7 +74,7 @@ const userReducer = (state = initialState, action) => {
         case UPDATE_USERNAME: {
             return {
                 ...state,
-                usernameText: action.userName
+                userNameText: action.userName
             }
         }
         case UPDATE_PASSWORD: {
@@ -82,12 +98,7 @@ const userReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
-                userRoles: [...state.userRoles.map(x => {
-                    if (x !== action.role) {
-                        return x;
-                    }
-                    return null;
-                })]
+                userRoles: [...state.userRoles.filter(x => x !== action.role)]
             }
         }
         case RESET_USER_DATA: {
@@ -111,11 +122,51 @@ const userReducer = (state = initialState, action) => {
             }
         }
         case SET_PAGES: {
-            console.log(action)
             return {
                 ...state,
                 currentPage: action.currentPage,
                 totalPages: action.totalPages,
+                isLastPage: action.currentPage === action.totalPages
+            }
+        }
+        case SET_NEW_USER: {
+            return {
+                ...state,
+                users: [...state.users, action.user]
+            }
+        }
+        case SET_UPDATED_USER: {
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    return u.userName === action.user.userName
+                        ? action.user
+                        : u
+                })
+            }
+        }
+        case SET_USER_ERRORS: {
+            return {
+                ...state,
+                userErrors: action.errors
+            }
+        }
+        case RESET_USER_ERRORS: {
+            return {
+                ...state,
+                userErrors: []
+            }
+        }
+        case CHANGE_SHOW_INACTIVE_USERS: {
+            return {
+                ...state,
+                showInactiveUsers: !state.showInactiveUsers
+            }
+        }
+        case UPDATE_SEARCH_STRING: {
+            return {
+                ...state,
+                searchString: action.searchString
             }
         }
         default:
@@ -123,11 +174,74 @@ const userReducer = (state = initialState, action) => {
     }
 }
 
-export const getUsers = (currentPage) => (dispatch) => {
-    userAPI.getUsers(currentPage).then(response=>{
+export  const getUsers = (currentPage, searchString, showInactiveUsers) => (dispatch) => {
+    userAPI.getUsers(currentPage, searchString, showInactiveUsers).then(response => {
         if (response.data.isSuccess) {
             dispatch(setUsers(response.data.data.content));
             dispatch(setPages(response.data.data.currentPage, response.data.data.totalPages));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const addUser = (user) => (dispatch) => {
+    userAPI.addUser(user).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setNewUser(user));
+        } else {
+            switch (response.status) {
+                case 400:
+                    dispatch(setUserErrors(response.data.errors))
+                    break;
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const  updateUser = (user) => (dispatch) => {
+    userAPI.updateUser(user).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setUpdatedUser(user));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const makeUserInactive = (userName, currentPage, searchString, showInactiveUsers) => (dispatch) => {
+    userAPI.makeUserInactive(userName).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(getUsers(currentPage, searchString, showInactiveUsers));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const restoreUser = (userName, currentPage, searchString, showInactiveUsers) => (dispatch) => {
+    userAPI.restoreUser(userName).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(getUsers(currentPage, searchString, showInactiveUsers));
         } else {
             switch (response.status) {
                 case 500:

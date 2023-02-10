@@ -19,7 +19,7 @@ const Login = (props) => {
     
     return (
         <>
-            {props.errors.map((e, index) => (<PositionedSnackbar resetAuthErrors={props.resetAuthErrors} key={index} index={index} message={e}/>))}
+            {props.errors.map((e, index) => (<PositionedSnackbar resetErrors={props.resetAuthErrors} key={index} index={index} message={e}/>))}
             <div className='d-flex justify-content-center mt-5'>
                 <div className='flex-column'>
                     <MDBInput className='mb-4 mt-5'

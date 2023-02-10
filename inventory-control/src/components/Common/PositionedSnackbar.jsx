@@ -29,7 +29,7 @@ export default function PositionedSnackbar(props) {
     };
 
     const handleExited = () => {
-        props.resetAuthErrors();
+        props.resetErrors();
         setMessageInfo(undefined);
     };
 

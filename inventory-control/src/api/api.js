@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import {makeUserInactive} from "../redux/reducers/user-reducer";
 
 const defaultOptions = {
     baseURL: 'https://inventorycontrol.up.railway.app/',
@@ -46,8 +47,44 @@ export const authAPI = {
 }
 
 export const userAPI = {
-    getUsers(currentPage) {
-        return instance.get(`user/list?pageSize=${1}&currentPage=${currentPage}`)
+    getUsers(currentPage, searchString, showInactiveUsers) {
+        return instance.get(`user/list?pageSize=${10}&currentPage=${currentPage}&searchString=${searchString}&showInactiveUsers=${showInactiveUsers}`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    addUser(user) {
+        return instance.post('user', user)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    updateUser(user) {
+        return instance.put('user', user)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    makeUserInactive(userName) {
+        return instance.delete(`user?userName=${userName}`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    restoreUser(userName) {
+        return instance.put(`user/restore?userName=${userName}`)
             .then(response => {
                 return response;
             })
