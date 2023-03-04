@@ -20,6 +20,18 @@ export const AddDeviceButton = (props) => {
         }
         setBasicModal(!basicModal);
     }
+    
+    const changeDeviceName = (e) => {
+        props.changeNewDeviceName(e.target.value);
+    }
+    
+    const addDevice = () => {
+        props.addDevice({
+            name: props.newDeviceName,
+            userName: props.newDeviceAssignment.userName
+        });
+        toggleShow();
+    }
 
     return (
         <>
@@ -45,8 +57,11 @@ export const AddDeviceButton = (props) => {
                         <MDBModalBody>
                             <DeviceForm
                                 localization={props.localization}
-                                changeDeviceName={props.changeDeviceName}
+                                changeDeviceName={changeDeviceName}
                                 users={props.users}
+                                name={props.newDeviceName}
+                                changeNewDeviceAssignment={props.changeNewDeviceAssignment}
+                                assignedUser={props.newDeviceAssignment}
                             />
                         </MDBModalBody>
                         <MDBModalFooter>
@@ -56,13 +71,14 @@ export const AddDeviceButton = (props) => {
                                 outline
                                 onClick={toggleShow}
                             >
-                                cancel
+                                {props.localization.cancel}
                             </MDBBtn>
                             <MDBBtn
                                 className='btn-sm'
                                 color='info'
+                                onClick={addDevice}
                             >
-                                Save changes
+                                {props.localization.saveChanges}
                             </MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>

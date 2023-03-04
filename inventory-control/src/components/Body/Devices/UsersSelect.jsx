@@ -11,6 +11,7 @@ const UsersSelect = (props) => {
             size="small"
             options={props.users}
             autoComplete={false}
+            onChange={(e, value) => props.changeUser(e, value)}
             getOptionLabel={(option) => option.fullName}
             renderOption={(props, user) => (
                 <Box

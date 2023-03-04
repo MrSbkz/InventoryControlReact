@@ -31,6 +31,8 @@
         makeInactive: "Make inactive",
         restore: "Restore",
         showInactiveUsers: "Show inactive users",
+        showDecommissionDevices: "Show decommission devices",
+        addDevice: "Add device",
     },
     Ru: {
         userName: "Имя пользователя",
@@ -64,5 +66,7 @@
         makeInactive: "Сделать неактивным",
         restore: "Восстановить",
         showInactiveUsers: "Показать неактивных пользователей",
+        showDecommissionDevices: "Показать списанные устройства",
+        addDevice: "Добавить устройство",
     }
 }

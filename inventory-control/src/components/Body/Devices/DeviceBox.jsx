@@ -5,7 +5,7 @@ import {MDBBtn, MDBCol, MDBIcon, MDBRow} from "mdb-react-ui-kit";
 
 const DeviceBox = (props) => {
     const onChangeDeviceName = (e) => {
-        props.changesDeviceName({
+        props.changeDeviceName({
             id: props.deviceInfo.id,
             name: e.target.value,
         });
@@ -15,7 +15,7 @@ const DeviceBox = (props) => {
         <Box sx={{margin: 1}}>
             <DeviceForm
                 name={props.deviceInfo.name}
-                onChangeDeviceName={onChangeDeviceName}
+                changeDeviceName={onChangeDeviceName}
                 users={props.users}
                 localization={props.localization}
                 assignedUser={props.device.assignedTo}
@@ -35,6 +35,7 @@ const DeviceBox = (props) => {
                         className='btn-success'
                         rounded
                         size="sm"
+                        onClick={() => props.downloadQRCode(props.device.id)}
                     >
                         <MDBIcon size='2x' fas icon="qrcode"/>
                     </MDBBtn>

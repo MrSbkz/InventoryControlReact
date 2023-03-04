@@ -1,15 +1,31 @@
-﻿const SET_DEVICES = 'SET_DEVICES';
+﻿import {deviceAPI} from "../../api/api";
+
+const SET_DEVICES = 'SET_DEVICES';
 const SET_USER_NAMES = 'SET_USER_NAMES';
 const CHANGE_DEVICE_NAME = 'CHANGE_DEVICE_NAME';
+const SET_DEVICE_PAGES = 'SET_DEVICE_PAGES';
+const SET_NEW_DEVICE = 'SET_NEW_DEVICE';
+const CHANGE_NEW_DEVICE_NAME = 'CHANGE_NEW_DEVICE_NAME';
+const CHANGE_NEW_DEVICE_ASSIGNMENT = 'CHANGE_NEW_DEVICE_ASSIGNMENT';
 
 export const setDevices = (devices) => ({type: SET_DEVICES, devices});
 export const setUserNames = (users) => ({type: SET_USER_NAMES, users});
-export const changesDeviceName = (device) => ({type: CHANGE_DEVICE_NAME, device});
+export const changeDeviceName = (device) => ({type: CHANGE_DEVICE_NAME, device});
+export const changeNewDeviceName = (deviceName) => ({type: CHANGE_NEW_DEVICE_NAME, deviceName});
+export const setDevicePages = (currentPage, totalPages) => ({type: SET_DEVICE_PAGES, currentPage, totalPages});
+export const setNewDevice = (device) => ({type: SET_NEW_DEVICE, device});
+export const changeNewDeviceAssignment = (user) => ({type: CHANGE_NEW_DEVICE_ASSIGNMENT, user});
 
 let initialState = {
     devices: [],
     users: [],
     deviceNames: [],
+    currentPage: 1,
+    totalPages: 0,
+    searchString: '',
+    showDecommissionDevice: false,
+    newDeviceName: '',
+    newDeviceAssignment: {},
 };
 
 const deviceReducer = (state = initialState, action) => {
@@ -41,58 +57,96 @@ const deviceReducer = (state = initialState, action) => {
                 })
             }
         }
+        case SET_DEVICE_PAGES: {
+            return {
+                ...state,
+                currentPage: action.currentPage,
+                totalPages: action.totalPages,
+            }
+        }
+        case SET_NEW_DEVICE: {
+            return {
+                ...state,
+                devices: [...state.devices, action.device]
+            }
+        }
+        case CHANGE_NEW_DEVICE_NAME: {
+            return {
+                ...state,
+                newDeviceName: action.deviceName
+            }
+        }
+        case CHANGE_NEW_DEVICE_ASSIGNMENT: {
+            return {
+                ...state,
+                newDeviceAssignment: action.user
+            }
+        }
 
         default:
             return state;
     }
 }
 
-export const getDevices = () => (dispatch) => {
-    let devices = [
-        {
-            id: 1,
-            name: 'Laptop HP',
-            registerDate: '2011-11-11 15:00:00',
-            assignedTo: {
-                fullName: 'Jaime Lannister',
-                userName: 'jaime.lannister'
-            },
-            decommissionDate: null
-        },
-        {
-            id: 2,
-            name: 'Laptop Acer',
-            registerDate: '2011-11-11 15:00:00',
-            assignedTo: {
-                fullName: 'Petyr Baelish',
-                userName: 'petyr.baelish'
-            },
-            decommissionDate: null
-        },
-    ]
-    dispatch(setDevices(devices));
+export const getDevices = (currentPage, searchString, showDecommissionDevice) => (dispatch) => {
+    deviceAPI.getDevices(currentPage, searchString, showDecommissionDevice).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setDevices(response.data.data.content));
+            dispatch(setDevicePages(response.data.data.currentPage, response.data.data.totalPages));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const downloadQRCode = (deviceId) => (dispatch) => {
+    deviceAPI.downloadQRCode(deviceId).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setDevices(response.data.data.content));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
 }
 
 export const getUserNames = () => (dispatch) => {
-    let users = [
-        {
-            fullName: 'Jaime Lannister',
-            userName: 'jaime.lannister'
-        },
-        {
-            fullName: 'Petyr Baelish',
-            userName: 'petyr.baelish'
-        },
-        {
-            fullName: 'Jorah Mormont',
-            userName: 'jorah.mormont'
-        },
-        {
-            fullName: 'Theon Greyjoy',
-            userName: 'theon.greyjoy'
-        },
-    ]
-    dispatch(setUserNames(users));
+    deviceAPI.getEmployees().then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setUserNames(response.data.data));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const addDevice = (device) => (dispatch) => {
+    deviceAPI.addDevice(device).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setNewDevice(response.data.data));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
 }
 
 export default deviceReducer;

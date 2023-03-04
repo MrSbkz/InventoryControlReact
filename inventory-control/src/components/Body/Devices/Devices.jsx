@@ -7,33 +7,52 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeviceRow from "./DeviceRow";
-import {MDBBtn, MDBIcon} from "mdb-react-ui-kit";
 import {AddDeviceButton} from "./AddDeviceButton";
+import {Pagination} from "@mui/material";
+import {MDBCheckbox, MDBCol, MDBRow} from "mdb-react-ui-kit";
 
 const Devices = (props) => {
     return (
         <>
-            <div className="row mt-2 mb-2">
-                <div className="col-md-4">
+            <MDBRow className="mt-2 mb-2">
+                <MDBCol size='md'>
                     <AddDeviceButton
                         localization={props.localization}
-                        changeDeviceName={props.changeDeviceName}
                         users={props.users}
+                        addDevice={props.addDevice}
+                        changeNewDeviceName={props.changeNewDeviceName}
+                        newDeviceName={props.newDeviceName}
+                        changeNewDeviceAssignment={props.changeNewDeviceAssignment}
+                        newDeviceAssignment={props.newDeviceAssignment}
                     />
-                </div>
-                <div className="col-md-3 offset-md-4">
+                </MDBCol>
+                <MDBCol size='md'>
+                    <MDBCheckbox
+                        name='flexCheck'
+                        value={props.showInactiveUsers}
+                        onChange={() => props.onShowInactiveUsers()}
+                        id='flexCheckDefault'
+                        label={props.localization.showDecommissionDevices}
+                    />
+                </MDBCol>
+                <MDBCol size='md'>
                     <div className="input-group rounded">
                         <input type="search"
                                className="form-control rounded"
                                placeholder={props.localization.search}
                                aria-label={props.localization.search}
-                               aria-describedby="search-addon"/>
+                               aria-describedby="search-addon"
+                               value={props.searchString}
+                               onChange={(e) => props.updateSearchString(e.target.value)}
+                        />
                         <span className="input-group-text border-0" id="search-addon">
-                        <i className="fas fa-search"></i>
+                        <i className="fas fa-search"
+                           onClick={() => props.getUsers(props.currentPage, props.searchString, props.showInactiveUsers)}
+                           style={{cursor: "pointer"}}></i>
                     </span>
                     </div>
-                </div>
-            </div>
+                </MDBCol>
+            </MDBRow>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
@@ -54,11 +73,22 @@ const Devices = (props) => {
                                     deviceInfo={props.deviceNames.find(x => x.id === device.id)}
                                     users={props.users}
                                     localization={props.localization}
-                                    changesDeviceName={props.changesDeviceName}/>
+                                    changeDeviceName={props.changeDeviceName}
+                                    downloadQRCode={props.downloadQRCode}
+                                />
                             ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <MDBRow className='d-flex justify-content-center'>
+                <MDBCol md='6' className='mt-5'>
+                    <Pagination
+                        page={props.currentPage}
+                        count={props.totalPages}
+                        onChange={(e, page) => props.getDevices(page, props.searchString, props.showDecommissionDevice)}
+                    />
+                </MDBCol>
+            </MDBRow>
         </>
     );
 }

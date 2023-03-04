@@ -58,7 +58,8 @@ const DeviceRow = (props) => {
                             device={props.device}
                             deviceInfo={props.deviceInfo}
                             localization={props.localization}
-                            changesDeviceName={props.changesDeviceName}
+                            changeDeviceName={props.changeDeviceName}
+                            downloadQRCode={props.downloadQRCode}
                         />
                     </Collapse>
                 </TableCell>

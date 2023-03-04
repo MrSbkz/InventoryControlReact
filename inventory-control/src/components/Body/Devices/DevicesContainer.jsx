@@ -2,12 +2,20 @@
 import {connect} from 'react-redux';
 import AccessError from "../../Common/AccessError";
 import Devices from "./Devices";
-import {changesDeviceName, getDevices, getUserNames} from "../../../redux/reducers/device-reducer";
+import {
+    changeDeviceName,
+    getDevices,
+    getUserNames,
+    downloadQRCode,
+    changeNewDeviceName,
+    addDevice,
+    changeNewDeviceAssignment,
+} from "../../../redux/reducers/device-reducer";
 
 
 class DevicesContainer extends React.Component {
     componentDidMount() {
-        this.props.getDevices();
+        this.props.getDevices(this.props.currentPage, this.props.searchString, this.props.showDecommissionDevice);
         this.props.getUserNames();
     }
 
@@ -31,14 +39,24 @@ const mapStateToProps = (state) => {
         devices: state.deviceReducer.devices,
         deviceNames: state.deviceReducer.deviceNames,
         users: state.deviceReducer.users,
+        currentPage: state.deviceReducer.currentPage,
+        totalPages: state.deviceReducer.totalPages,
+        searchString: state.deviceReducer.searchString,
+        newDeviceName: state.deviceReducer.newDeviceName,
+        showDecommissionDevice: state.deviceReducer.showDecommissionDevice,
+        newDeviceAssignment: state.deviceReducer.newDeviceAssignment,
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getDevices: () => dispatch(getDevices()),
+        getDevices: (currentPage, searchString, showDecommissionDevice) => dispatch(getDevices(currentPage, searchString, showDecommissionDevice)),
         getUserNames: () => dispatch(getUserNames()),
-        changesDeviceName: (device) => dispatch(changesDeviceName(device)),
+        changeDeviceName: (device) => dispatch(changeDeviceName(device)),
+        downloadQRCode: (deviceId) => dispatch(downloadQRCode(deviceId)),
+        addDevice: (device) => dispatch(addDevice(device)),
+        changeNewDeviceName: (deviceName) => dispatch(changeNewDeviceName(deviceName)),
+        changeNewDeviceAssignment: (user) => dispatch(changeNewDeviceAssignment(user)),
     };
 }
 
