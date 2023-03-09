@@ -4,9 +4,6 @@ import {MDBCol, MDBRow} from "mdb-react-ui-kit";
 import {Input} from "@mui/material";
 
 const DeviceForm = (props) => {
-    const changeNewDeviceAssignment = (e, value) => {
-        props.changeNewDeviceAssignment(value)
-    }
     return (
         <>
             <MDBRow className='mb-4 mt-3'>
@@ -28,7 +25,7 @@ const DeviceForm = (props) => {
                         users={props.users}
                         localization={props.localization}
                         assignedUser={props.assignedUser}
-                        changeUser={changeNewDeviceAssignment}
+                        changeUser={(e, v) => props.changeDeviceAssignment(v)}
                     />
                 </MDBCol>
             </MDBRow>

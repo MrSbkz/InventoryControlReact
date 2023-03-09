@@ -7,6 +7,13 @@ const SET_DEVICE_PAGES = 'SET_DEVICE_PAGES';
 const SET_NEW_DEVICE = 'SET_NEW_DEVICE';
 const CHANGE_NEW_DEVICE_NAME = 'CHANGE_NEW_DEVICE_NAME';
 const CHANGE_NEW_DEVICE_ASSIGNMENT = 'CHANGE_NEW_DEVICE_ASSIGNMENT';
+const CHANGE_DEVICE_ASSIGNMENT = 'CHANGE_DEVICE_ASSIGNMENT';
+const SET_UPDATED_DEVICE = 'SET_UPDATED_DEVICE';
+const SET_DEVICE_ASSIGNMENTS = 'SET_DEVICE_ASSIGNMENTS';
+const UPDATE_SEARCH_DEVICE_STRING = 'UPDATE_SEARCH_DEVICE_STRING';
+const CHANGE_SHOW_DECOMMISSION_DEVICES = 'CHANGE_SHOW_DECOMMISSION_DEVICES';
+const SET_DECOMMISSION_DEVICE = 'SET_DECOMMISSION_DEVICE';
+const CHANGE_SHOW_UNASSIGNED_DEVICES = 'CHANGE_SHOW_UNASSIGNED_DEVICES';
 
 export const setDevices = (devices) => ({type: SET_DEVICES, devices});
 export const setUserNames = (users) => ({type: SET_USER_NAMES, users});
@@ -15,6 +22,13 @@ export const changeNewDeviceName = (deviceName) => ({type: CHANGE_NEW_DEVICE_NAM
 export const setDevicePages = (currentPage, totalPages) => ({type: SET_DEVICE_PAGES, currentPage, totalPages});
 export const setNewDevice = (device) => ({type: SET_NEW_DEVICE, device});
 export const changeNewDeviceAssignment = (user) => ({type: CHANGE_NEW_DEVICE_ASSIGNMENT, user});
+export const changeDeviceAssignment = (device) => ({type: CHANGE_DEVICE_ASSIGNMENT, device});
+export const setUpdatedDevice = (device) => ({type: SET_UPDATED_DEVICE, device});
+export const setDeviceAssignments = (assignment) => ({type: SET_DEVICE_ASSIGNMENTS, assignment});
+export const updateSearchDeviceString = (searchString) => ({type: UPDATE_SEARCH_DEVICE_STRING, searchString});
+export const changeShowDecommissionDevices = () => ({type: CHANGE_SHOW_DECOMMISSION_DEVICES});
+export const changeShowUnassignedDevices = () => ({type: CHANGE_SHOW_UNASSIGNED_DEVICES});
+export const setDecommissionDevice = (device) => ({type: SET_DECOMMISSION_DEVICE, device});
 
 let initialState = {
     devices: [],
@@ -24,8 +38,10 @@ let initialState = {
     totalPages: 0,
     searchString: '',
     showDecommissionDevice: false,
+    showUnassignedDevices: false,
     newDeviceName: '',
     newDeviceAssignment: {},
+    deviceAssignments: [],
 };
 
 const deviceReducer = (state = initialState, action) => {
@@ -82,14 +98,74 @@ const deviceReducer = (state = initialState, action) => {
                 newDeviceAssignment: action.user
             }
         }
+        case CHANGE_DEVICE_ASSIGNMENT: {
+            return {
+                ...state,
+                devices: state.devices.map(d => d.id === action.device.id ? action.device : d)
+            }
+        }
+        case SET_UPDATED_DEVICE: {
+            return {
+                ...state,
+                devices: state.devices.map(d => d.id === action.device.id ? action.device : d)
+            }
+        }
+        case SET_DEVICE_ASSIGNMENTS: {
+            let assignment = state.deviceAssignments.find(x => x.id === action.assignment.id);
+            if(assignment){
+                assignment.user = action.assignment.user;
+                return {
+                    ...state,
+                    deviceAssignments: state.deviceAssignments.map(d => d.id === assignment.id ? assignment : d)
+                }
+            }
+            else {
+                return {
+                    ...state,
+                    deviceAssignments: [...state.deviceAssignments, action.assignment]
+                }
+            }
+            
+        }
+        case UPDATE_SEARCH_DEVICE_STRING: {
+            return {
+                ...state,
+                searchString: action.searchString
+            }
+        }
+        case CHANGE_SHOW_DECOMMISSION_DEVICES: {
+            return {
+                ...state,
+                showDecommissionDevice: !state.showDecommissionDevice
+            }
+        }
+        case CHANGE_SHOW_UNASSIGNED_DEVICES: {
+            return {
+                ...state,
+                showUnassignedDevices: !state.showUnassignedDevices
+            }
+        }
+        case SET_DECOMMISSION_DEVICE: {
+            if(state.showDecommissionDevice){
+                return {
+                    ...state,
+                    devices: state.devices.map(d => d.id === action.device.id ? action.device : d)
+                }
+            }
+            
+            return {
+                ...state,
+                devices: state.devices.filter(d => d.id !== action.device.id)
+            }
+        }
 
         default:
             return state;
     }
 }
 
-export const getDevices = (currentPage, searchString, showDecommissionDevice) => (dispatch) => {
-    deviceAPI.getDevices(currentPage, searchString, showDecommissionDevice).then(response => {
+export const getDevices = (currentPage, searchString, showDecommissionDevice, showUnassignedDevices) => (dispatch) => {
+    deviceAPI.getDevices(currentPage, searchString, showDecommissionDevice, showUnassignedDevices).then(response => {
         if (response.data.isSuccess) {
             dispatch(setDevices(response.data.data.content));
             dispatch(setDevicePages(response.data.data.currentPage, response.data.data.totalPages));
@@ -122,7 +198,9 @@ export const downloadQRCode = (deviceId) => (dispatch) => {
 export const getUserNames = () => (dispatch) => {
     deviceAPI.getEmployees().then(response => {
         if (response.data.isSuccess) {
-            dispatch(setUserNames(response.data.data));
+            let users = [{fullName: 'Unassigned',userName: null}];
+            users = users.concat(response.data.data);
+            dispatch(setUserNames(users));
         } else {
             switch (response.status) {
                 case 500:
@@ -138,6 +216,36 @@ export const addDevice = (device) => (dispatch) => {
     deviceAPI.addDevice(device).then(response => {
         if (response.data.isSuccess) {
             dispatch(setNewDevice(response.data.data));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const updateDevice = (device) => (dispatch) => {
+    deviceAPI.updateDevice(device).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setUpdatedDevice(response.data.data));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const decommissionDevice = (deviceId) => (dispatch) => {
+    deviceAPI.decommissionDevice(deviceId).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setDecommissionDevice(response.data.data));
         } else {
             switch (response.status) {
                 case 500:

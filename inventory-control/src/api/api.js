@@ -96,8 +96,8 @@ export const userAPI = {
 }
 
 export const deviceAPI = {
-    getDevices(currentPage, searchString, showDecommissionDevice) {
-        return instance.get(`device/list?pageSize=${10}&currentPage=${currentPage}&searchString=${searchString}&showDecommissionDevice=${showDecommissionDevice}`)
+    getDevices(currentPage, searchString, showDecommissionDevice, showUnassignedDevices) {
+        return instance.get(`device/list?pageSize=${10}&currentPage=${currentPage}&searchString=${searchString}&showDecommissionDevice=${showDecommissionDevice}&showUnassignedDevices=${showUnassignedDevices}`)
             .then(response => {
                 return response;
             })
@@ -126,6 +126,24 @@ export const deviceAPI = {
     },
     addDevice(device) {
         return instance.post(`device`, device)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    updateDevice(device) {
+        return instance.put(`device`, device)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    decommissionDevice(deviceId) {
+        return instance.delete(`device?deviceId=${deviceId}`)
             .then(response => {
                 return response;
             })

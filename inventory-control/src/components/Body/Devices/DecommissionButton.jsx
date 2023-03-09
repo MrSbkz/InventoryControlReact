@@ -6,30 +6,20 @@ import {
     MDBModalContent,
     MDBModalHeader,
     MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-    MDBIcon,
+    MDBModalFooter, MDBModalBody,
 } from 'mdb-react-ui-kit';
-import DeviceForm from "./DeviceForm";
 
 
-export const AddDeviceButton = (props) => {
+export const DecommissionButton = (props) => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => {
         if (!basicModal) {
         }
         setBasicModal(!basicModal);
     }
-    
-    const changeDeviceName = (e) => {
-        props.changeNewDeviceName(e.target.value);
-    }
-    
-    const addDevice = () => {
-        props.addDevice({
-            name: props.newDeviceName,
-            userName: props.newDeviceAssignment.userName
-        });
+
+    const decommissionDevice = () => {
+        props.decommissionDevice();
         toggleShow();
     }
 
@@ -37,17 +27,17 @@ export const AddDeviceButton = (props) => {
         <>
             <MDBBtn
                 onClick={toggleShow}
-                color="success"
+                color="danger"
                 rounded
                 outline
             >
-                <MDBIcon fas size="lg" icon="plus"/>
+                {props.localization.decommission}
             </MDBBtn>
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
                 <MDBModalDialog centered>
                     <MDBModalContent>
                         <MDBModalHeader>
-                            <MDBModalTitle>Add device</MDBModalTitle>
+                            <MDBModalTitle>{props.localization.decommission}?</MDBModalTitle>
                             <MDBBtn
                                 className='btn-close'
                                 color='none'
@@ -55,30 +45,23 @@ export const AddDeviceButton = (props) => {
                             />
                         </MDBModalHeader>
                         <MDBModalBody>
-                            <DeviceForm
-                                localization={props.localization}
-                                changeDeviceName={changeDeviceName}
-                                users={props.users}
-                                name={props.newDeviceName}
-                                changeDeviceAssignment={props.changeNewDeviceAssignment}
-                                assignedUser={props.newDeviceAssignment}
-                            />
+                            {props.localization.decommissionQuestion} {props.deviceName}?
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn
                                 className='btn-sm'
-                                color='danger'
+                                color='info'
                                 outline
                                 onClick={toggleShow}
                             >
-                                {props.localization.cancel}
+                                {props.localization.no}
                             </MDBBtn>
                             <MDBBtn
                                 className='btn-sm'
-                                color='info'
-                                onClick={addDevice}
+                                color='danger'
+                                onClick={decommissionDevice}
                             >
-                                {props.localization.saveChanges}
+                                {props.localization.yes}
                             </MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>

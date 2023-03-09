@@ -29,10 +29,17 @@ const Devices = (props) => {
                 <MDBCol size='md'>
                     <MDBCheckbox
                         name='flexCheck'
-                        value={props.showInactiveUsers}
-                        onChange={() => props.onShowInactiveUsers()}
+                        checked={props.showDecommissionDevice}
+                        onChange={() => props.onShowDecommissionDevices()}
                         id='flexCheckDefault'
                         label={props.localization.showDecommissionDevices}
+                    />
+                    <MDBCheckbox
+                        name='flexCheck'
+                        checked={props.showUnassignedDevices}
+                        onChange={() => props.onShowUnassignedDevices()}
+                        id='flexCheckDefault'
+                        label={props.localization.showUnassignedDevices}
                     />
                 </MDBCol>
                 <MDBCol size='md'>
@@ -43,11 +50,11 @@ const Devices = (props) => {
                                aria-label={props.localization.search}
                                aria-describedby="search-addon"
                                value={props.searchString}
-                               onChange={(e) => props.updateSearchString(e.target.value)}
+                               onChange={(e) => props.updateSearchDeviceString(e.target.value)}
                         />
                         <span className="input-group-text border-0" id="search-addon">
                         <i className="fas fa-search"
-                           onClick={() => props.getUsers(props.currentPage, props.searchString, props.showInactiveUsers)}
+                           onClick={() => props.getDevices(props.currentPage, props.searchString, props.showDecommissionDevice, props.showUnassignedDevices)}
                            style={{cursor: "pointer"}}></i>
                     </span>
                     </div>
@@ -75,6 +82,11 @@ const Devices = (props) => {
                                     localization={props.localization}
                                     changeDeviceName={props.changeDeviceName}
                                     downloadQRCode={props.downloadQRCode}
+                                    changeDeviceAssignment={props.changeDeviceAssignment}
+                                    updateDevice={props.updateDevice}
+                                    setDeviceAssignments={props.setDeviceAssignments}
+                                    deviceAssignments={props.deviceAssignments}
+                                    decommissionDevice={props.decommissionDevice}
                                 />
                             ))}
                     </TableBody>
@@ -85,7 +97,7 @@ const Devices = (props) => {
                     <Pagination
                         page={props.currentPage}
                         count={props.totalPages}
-                        onChange={(e, page) => props.getDevices(page, props.searchString, props.showDecommissionDevice)}
+                        onChange={(e, page) => props.getDevices(page, props.searchString, props.showDecommissionDevice, props.showUnassignedDevices)}
                     />
                 </MDBCol>
             </MDBRow>

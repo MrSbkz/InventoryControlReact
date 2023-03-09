@@ -86,7 +86,7 @@ const Users = (props) => {
                 <MDBCol size='md'>
                     <MDBCheckbox
                         name='flexCheck'
-                        value={props.showInactiveUsers}
+                        checked={props.showInactiveUsers}
                         onChange={() => props.onShowInactiveUsers()}
                         id='flexCheckDefault'
                         label={props.localization.showInactiveUsers}
