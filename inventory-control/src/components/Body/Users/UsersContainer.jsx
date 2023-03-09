@@ -20,17 +20,11 @@ class UsersContainer extends React.Component {
     constructor(props) {
         super(props);
         this.saveChanges = this.saveChanges.bind(this);
-        this.onSearchUsers = this.onSearchUsers.bind(this);
         this.onShowInactiveUsers = this.onShowInactiveUsers.bind(this);
     }
 
     componentDidMount() {
         this.props.getUsers(1, this.props.searchString, this.props.showInactiveUsers);
-    }
-
-    onSearchUsers(searchString) {
-        this.props.updateSearchString(searchString);
-        this.props.getUsers(this.props.currentPage, this.props.searchString, this.props.showInactiveUsers);
     }
 
     async onShowInactiveUsers() {
@@ -61,7 +55,6 @@ class UsersContainer extends React.Component {
                     this.props.roles.includes("admin")
                         ? <Users {...this.props} 
                                  saveChanges={this.saveChanges}
-                                 onSearchUsers={this.onSearchUsers}
                                  onShowInactiveUsers={this.onShowInactiveUsers}
                         />
                         : <AccessError/>

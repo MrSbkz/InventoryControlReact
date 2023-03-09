@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import UsersSelect from "./UsersSelect";
-import { MDBCol,  MDBRow} from "mdb-react-ui-kit";
+import {MDBCol, MDBRow} from "mdb-react-ui-kit";
 import {Input} from "@mui/material";
 
 const DeviceForm = (props) => {
@@ -8,14 +8,14 @@ const DeviceForm = (props) => {
         <>
             <MDBRow className='mb-4 mt-3'>
                 <MDBCol>
-                    <h6>{props.localization.changeDeviceName}</h6>
+                    <h6>{props.localization.deviceName}</h6>
                     <Input
                         color="primary"
                         size="sm"
                         variant="outlined"
                         autoFocus
                         value={props.name}
-                        onChange={(e) => props.onChangeDeviceName(e)}
+                        onChange={(e) => props.changeDeviceName(e)}
                     />
 
                 </MDBCol>
@@ -25,6 +25,7 @@ const DeviceForm = (props) => {
                         users={props.users}
                         localization={props.localization}
                         assignedUser={props.assignedUser}
+                        changeUser={(e, v) => props.changeDeviceAssignment(v)}
                     />
                 </MDBCol>
             </MDBRow>

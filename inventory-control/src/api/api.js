@@ -1,5 +1,4 @@
 ﻿import axios from 'axios';
-import {makeUserInactive} from "../redux/reducers/user-reducer";
 
 const defaultOptions = {
     baseURL: 'https://inventorycontrol.up.railway.app/',
@@ -7,6 +6,8 @@ const defaultOptions = {
         'Content-Type': 'application/json',
     },
 };
+
+const FileDownload = require('js-file-download');
 
 let instance = axios.create(defaultOptions);
 
@@ -36,7 +37,7 @@ export const authAPI = {
             })
     },
     getRoles() {
-        return instance.get(`role/list`)
+        return instance.get(`role/user/list`)
             .then(response => {
                 return response
             })
@@ -92,4 +93,62 @@ export const userAPI = {
                 return error.response
             })
     }
+}
+
+export const deviceAPI = {
+    getDevices(currentPage, searchString, showDecommissionDevice, showUnassignedDevices) {
+        return instance.get(`device/list?pageSize=${10}&currentPage=${currentPage}&searchString=${searchString}&showDecommissionDevice=${showDecommissionDevice}&showUnassignedDevices=${showUnassignedDevices}`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    downloadQRCode(deviceId) {
+        return instance.get(`device/qr-code?deviceId=${deviceId}`,{responseType: 'blob'})
+            .then(response => {
+                FileDownload(response.data, `${deviceId}.png`);
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    getEmployees() {
+        return instance.get(`device/employees`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    addDevice(device) {
+        return instance.post(`device`, device)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    updateDevice(device) {
+        return instance.put(`device`, device)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    decommissionDevice(deviceId) {
+        return instance.delete(`device?deviceId=${deviceId}`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
 }

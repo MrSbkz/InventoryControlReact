@@ -28,7 +28,7 @@ const DeviceRow = (props) => {
                     component="th" 
                     scope="row"
                 >
-                    {props.device.assignedTo.fullName}
+                    {props.device.assignedTo ? props.device.assignedTo.fullName : ''}
                 </TableCell>
                 <TableCell 
                     component="th"
@@ -40,7 +40,7 @@ const DeviceRow = (props) => {
                     component="th"
                     scope="row"
                 >
-                    {props.device.decommissionDate ? props.decommissionDate : '--/--'}
+                    {props.device.decommissionDate ? props.device.decommissionDate : '--/--'}
                 </TableCell>
             </TableRow>
             <TableRow>
@@ -58,7 +58,13 @@ const DeviceRow = (props) => {
                             device={props.device}
                             deviceInfo={props.deviceInfo}
                             localization={props.localization}
-                            changesDeviceName={props.changesDeviceName}
+                            changeDeviceName={props.changeDeviceName}
+                            downloadQRCode={props.downloadQRCode}
+                            changeDeviceAssignment={props.changeDeviceAssignment}
+                            updateDevice={props.updateDevice}
+                            setDeviceAssignments={props.setDeviceAssignments}
+                            deviceAssignments={props.deviceAssignments}
+                            decommissionDevice={props.decommissionDevice}
                         />
                     </Collapse>
                 </TableCell>

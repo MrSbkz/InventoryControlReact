@@ -31,6 +31,13 @@
         makeInactive: "Make inactive",
         restore: "Restore",
         showInactiveUsers: "Show inactive users",
+        showDecommissionDevices: "Show decommission devices",
+        addDevice: "Add device",
+        showUnassignedDevices: "Show unassigned devices",
+        decommission: "Decommission",
+        decommissionQuestion: "Are you sure you want to decommission the device",
+        yes: "Yes",
+        no: "No"
     },
     Ru: {
         userName: "Имя пользователя",
@@ -64,5 +71,12 @@
         makeInactive: "Сделать неактивным",
         restore: "Восстановить",
         showInactiveUsers: "Показать неактивных пользователей",
+        showDecommissionDevices: "Показать списанные устройства",
+        addDevice: "Добавить устройство",
+        showUnassignedDevices: "Показать незакрепленные устройства",
+        decommission: "Списать",
+        decommissionQuestion: "Вы уверены что хотитие списать устройство",
+        yes: "Да",
+        no: "Нет"
     }
 }
