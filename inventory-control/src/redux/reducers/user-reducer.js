@@ -16,6 +16,7 @@ const SET_USER_ERRORS = 'SET_USER_ERRORS';
 const RESET_USER_ERRORS = 'RESET_USER_ERRORS';
 const CHANGE_SHOW_INACTIVE_USERS = 'CHANGE_SHOW_INACTIVE_USERS';
 const UPDATE_SEARCH_STRING = 'UPDATE_SEARCH_STRING';
+const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const setUsers = (users) => ({type: SET_USERS, users});
 export const updateFirstName = (firstName) => ({type: UPDATE_FIRST_NAME, firstName});
@@ -33,6 +34,7 @@ export const setUserErrors = (errors) => ({type: SET_USER_ERRORS, errors});
 export const resetUserErrors = (errors) => ({type: RESET_USER_ERRORS, errors});
 export const changeShowInactiveUsers = () => ({type: CHANGE_SHOW_INACTIVE_USERS});
 export const updateSearchString = (searchString) => ({type: UPDATE_SEARCH_STRING, searchString});
+export const setCurrentUser = (user) => ({type: SET_CURRENT_USER, user});
 
 let initialState = {
     users: [],
@@ -49,6 +51,7 @@ let initialState = {
     userErrors: [],
     showInactiveUsers: false,
     searchString: '',
+    currentUser: {},
 };
 
 const userReducer = (state = initialState, action) => {
@@ -169,12 +172,18 @@ const userReducer = (state = initialState, action) => {
                 searchString: action.searchString
             }
         }
+        case SET_CURRENT_USER: {
+            return {
+                ...state,
+                currentUser: action.user
+            }
+        }
         default:
             return state;
     }
 }
 
-export  const getUsers = (currentPage, searchString, showInactiveUsers) => (dispatch) => {
+export const getUsers = (currentPage, searchString, showInactiveUsers) => (dispatch) => {
     userAPI.getUsers(currentPage, searchString, showInactiveUsers).then(response => {
         if (response.data.isSuccess) {
             dispatch(setUsers(response.data.data.content));
@@ -242,6 +251,21 @@ export const restoreUser = (userName, currentPage, searchString, showInactiveUse
     userAPI.restoreUser(userName).then(response => {
         if (response.data.isSuccess) {
             dispatch(getUsers(currentPage, searchString, showInactiveUsers));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const getUser = () => (dispatch) => {
+    userAPI.getUser().then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setCurrentUser(response.data.data));
         } else {
             switch (response.status) {
                 case 500:

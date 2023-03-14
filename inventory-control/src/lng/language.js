@@ -37,7 +37,9 @@
         decommission: "Decommission",
         decommissionQuestion: "Are you sure you want to decommission the device",
         yes: "Yes",
-        no: "No"
+        no: "No",
+        profile: "Profile",
+        history: "History",
     },
     Ru: {
         userName: "Имя пользователя",
@@ -77,6 +79,8 @@
         decommission: "Списать",
         decommissionQuestion: "Вы уверены что хотитие списать устройство",
         yes: "Да",
-        no: "Нет"
+        no: "Нет",
+        profile: "Профиль",
+        history: "История",
     }
 }

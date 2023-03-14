@@ -32,7 +32,7 @@ const localizationReducer = (state = initialState, action) => {
             return state;
         }
         case SET_LANGUAGE: {
-            if (localStorage.getItem(INVENTORY_CONTROL_LANGUAGE).includes('RU')) {
+            if (localStorage.getItem(INVENTORY_CONTROL_LANGUAGE) && localStorage.getItem(INVENTORY_CONTROL_LANGUAGE).includes('RU')) {
                 return {
                     ...state,
                     localization: language.Ru,

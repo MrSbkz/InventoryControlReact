@@ -17,8 +17,8 @@ instance.interceptors.request.use(function (config) {
     return config;
 });
 
-export const authAPI = {
-    login(username, password) {
+export  const authAPI = {
+     login(username, password) {
         return instance.post(`auth/login`, {username, password})
             .then(response => {
                 return response
@@ -86,6 +86,15 @@ export const userAPI = {
     },
     restoreUser(userName) {
         return instance.put(`user/restore?userName=${userName}`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
+    getUser() {
+        return instance.get(`user`)
             .then(response => {
                 return response;
             })
