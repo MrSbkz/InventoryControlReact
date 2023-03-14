@@ -23,6 +23,7 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_TOKEN: {
             localStorage.setItem(INVENTORY_CONTROL_TOKEN, JSON.stringify(action.token));
+            window.location.href = '/profile';
             return {
                 ...state,
                 isAuthorized: true,
