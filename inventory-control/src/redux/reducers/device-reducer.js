@@ -14,6 +14,7 @@ const UPDATE_SEARCH_DEVICE_STRING = 'UPDATE_SEARCH_DEVICE_STRING';
 const CHANGE_SHOW_DECOMMISSION_DEVICES = 'CHANGE_SHOW_DECOMMISSION_DEVICES';
 const SET_DECOMMISSION_DEVICE = 'SET_DECOMMISSION_DEVICE';
 const CHANGE_SHOW_UNASSIGNED_DEVICES = 'CHANGE_SHOW_UNASSIGNED_DEVICES';
+const SET_DEVICE_HISTORY = 'SET_DEVICE_HISTORY';
 
 export const setDevices = (devices) => ({type: SET_DEVICES, devices});
 export const setUserNames = (users) => ({type: SET_USER_NAMES, users});
@@ -29,6 +30,7 @@ export const updateSearchDeviceString = (searchString) => ({type: UPDATE_SEARCH_
 export const changeShowDecommissionDevices = () => ({type: CHANGE_SHOW_DECOMMISSION_DEVICES});
 export const changeShowUnassignedDevices = () => ({type: CHANGE_SHOW_UNASSIGNED_DEVICES});
 export const setDecommissionDevice = (device) => ({type: SET_DECOMMISSION_DEVICE, device});
+export const setDeviceHistory = (deviceHistory) => ({type: SET_DEVICE_HISTORY, deviceHistory});
 
 let initialState = {
     devices: [],
@@ -42,6 +44,7 @@ let initialState = {
     newDeviceName: '',
     newDeviceAssignment: {},
     deviceAssignments: [],
+    deviceHistory: [],
 };
 
 const deviceReducer = (state = initialState, action) => {
@@ -83,7 +86,8 @@ const deviceReducer = (state = initialState, action) => {
         case SET_NEW_DEVICE: {
             return {
                 ...state,
-                devices: [...state.devices, action.device]
+                devices: [...state.devices, action.device],
+                deviceNames: [...state.deviceNames, {id: action.device.id, name: action.device.name}]
             }
         }
         case CHANGE_NEW_DEVICE_NAME: {
@@ -158,6 +162,12 @@ const deviceReducer = (state = initialState, action) => {
                 devices: state.devices.filter(d => d.id !== action.device.id)
             }
         }
+        case SET_DEVICE_HISTORY: {
+            return {
+                ...state,
+                deviceHistory: action.deviceHistory,
+            }
+        }
 
         default:
             return state;
@@ -215,6 +225,7 @@ export const getUserNames = () => (dispatch) => {
 export const addDevice = (device) => (dispatch) => {
     deviceAPI.addDevice(device).then(response => {
         if (response.data.isSuccess) {
+            console.log(response.data)
             dispatch(setNewDevice(response.data.data));
         } else {
             switch (response.status) {
@@ -246,6 +257,21 @@ export const decommissionDevice = (deviceId) => (dispatch) => {
     deviceAPI.decommissionDevice(deviceId).then(response => {
         if (response.data.isSuccess) {
             dispatch(setDecommissionDevice(response.data.data));
+        } else {
+            switch (response.status) {
+                case 500:
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+}
+
+export const getDeviceHistory = (deviceId) => (dispatch) => {
+    deviceAPI.getDeviceHistory(deviceId).then(response => {
+        if (response.data.isSuccess) {
+            dispatch(setDeviceHistory(response.data.data));
         } else {
             switch (response.status) {
                 case 500:

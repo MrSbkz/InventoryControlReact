@@ -160,4 +160,13 @@ export const deviceAPI = {
                 return error.response
             })
     },
+    getDeviceHistory(deviceId) {
+        return instance.get(`device/device-history?deviceId=${deviceId}`)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response
+            })
+    },
 }

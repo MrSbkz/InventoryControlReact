@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import {MDBTable, MDBTableHead, MDBTableBody, MDBBtn} from 'mdb-react-ui-kit';
+import DeviceHistoryContainer from "../../Common/DeviceHistoryContainer";
 
 const Profile = (props) => {
     return (
@@ -20,17 +21,13 @@ const Profile = (props) => {
                 <MDBTableBody>
                     {props.userDevices.map((d, index) => {
                         return <tr key={index}>
-                            <th scope='row'>1</th>
+                            <th scope='row'>{d.id}</th>
                             <td>{d.name}</td>
                             <td>{d.registerDate}</td>
                             <td>
-                                <MDBBtn
-                                    color='primary'
-                                    rounded
-                                    size='sm'
-                                >
-                                    {props.localization.history}
-                                </MDBBtn>
+                                <DeviceHistoryContainer 
+                                    deviceId={d.id}
+                                />
                             </td>
                         </tr>
                     })}
