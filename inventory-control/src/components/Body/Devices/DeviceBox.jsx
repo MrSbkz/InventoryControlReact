@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import DeviceForm from "./DeviceForm";
 import {MDBBtn, MDBCol, MDBIcon, MDBRow} from "mdb-react-ui-kit";
 import {DecommissionButton} from "./DecommissionButton";
+import DeviceHistoryContainer from "../../Common/DeviceHistoryContainer";
 
 const DeviceBox = (props) => {
     const changeDeviceName = (e) => {
@@ -66,6 +67,9 @@ const DeviceBox = (props) => {
                         localization={props.localization}
                         decommissionDevice={decommissionDevice}
                         deviceName={props.device.name}
+                    />{'  '}
+                    <DeviceHistoryContainer 
+                        deviceId={props.device.id}
                     />
                 </MDBCol>
             </MDBRow>

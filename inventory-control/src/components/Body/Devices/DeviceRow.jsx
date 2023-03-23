@@ -6,7 +6,7 @@ import DeviceBox from "./DeviceBox";
 
 const DeviceRow = (props) => {
     const [open, setOpen] = React.useState(false);
-
+    console.log(props.deviceInfo)
     return (
         <React.Fragment>
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}

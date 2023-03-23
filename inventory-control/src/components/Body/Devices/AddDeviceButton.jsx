@@ -47,7 +47,7 @@ export const AddDeviceButton = (props) => {
                 <MDBModalDialog centered>
                     <MDBModalContent>
                         <MDBModalHeader>
-                            <MDBModalTitle>Add device</MDBModalTitle>
+                            <MDBModalTitle>{props.localization.addDevice}</MDBModalTitle>
                             <MDBBtn
                                 className='btn-close'
                                 color='none'
