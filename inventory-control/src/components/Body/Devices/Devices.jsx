@@ -38,7 +38,7 @@ const Devices = (props) => {
                         name='flexCheck'
                         checked={props.showUnassignedDevices}
                         onChange={() => props.onShowUnassignedDevices()}
-                        id='flexCheckDefault'
+                        id='flexCheckDefault1'
                         label={props.localization.showUnassignedDevices}
                     />
                 </MDBCol>
