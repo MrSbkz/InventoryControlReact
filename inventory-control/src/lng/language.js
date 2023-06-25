@@ -40,6 +40,10 @@
         no: "No",
         profile: "Profile",
         history: "History",
+        action: "Action",
+        date: "Date",
+        deviceHistory: "Device history",
+        close: "Close",
     },
     Ru: {
         userName: "Имя пользователя",
@@ -82,5 +86,9 @@
         no: "Нет",
         profile: "Профиль",
         history: "История",
+        action: "Действие",
+        date: "Дата",
+        deviceHistory: "История устройства",
+        close: "Закрыть",
     }
 }

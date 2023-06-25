@@ -12,6 +12,7 @@ import {Pagination} from "@mui/material";
 import {MDBCheckbox, MDBCol, MDBRow} from "mdb-react-ui-kit";
 
 const Devices = (props) => {
+    console.log(props.deviceNames)
     return (
         <>
             <MDBRow className="mt-2 mb-2">
